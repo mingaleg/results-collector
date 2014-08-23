@@ -1,0 +1,3 @@
+Участник;{% if REGION %}Регион;{% endif %}{% for prob in CONTEST.probs_names %}{{ prob }};{%  endfor %}Баллы
+{% for res in RESULTS %}{{ res.surname }} {{ res.name }};{% if REGION %}{{ res.region }};{% endif %}{% for sc in res.probs_scores %}{{ sc }};{% endfor %}{{ res.score }}
+{% endfor %}

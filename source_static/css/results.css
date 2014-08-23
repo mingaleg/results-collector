@@ -1,0 +1,56 @@
+#restable .grade {
+    text-align: center;
+}
+
+#restable .prob {
+    text-align: center;
+}
+
+#restable .place {
+    text-align: center;
+}
+
+#restable .day {
+    text-align: center;
+}
+
+#restable .score {
+    text-align: center;
+}
+
+#restable thead .region {
+    text-align: center;
+}
+
+#restable thead .participant {
+    text-align: center;
+}
+
+.right.paginator {
+    right: 0;
+    float: right;
+}
+
+.right.paginator:after {
+    clear: both;
+}
+
+.content {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    text-align: center;
+}
+
+a {
+    color: #009FDA;
+    text-decoration: none;
+}
+
+a:hover, a:focus {
+    color: #00BAFF;
+    text-decoration: none;
+}
+
+.grades {
+    float: right;
+}

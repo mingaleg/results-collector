@@ -1,0 +1,14 @@
+<html>
+<body>
+<table>
+    {% for res in RESULTS %}
+    <tr>
+        <td>{{ res.surname }} {{ res.name }}</td>
+        {% for sc in res.probs_scores %}
+        <td>{{ sc }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

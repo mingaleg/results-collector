@@ -1,0 +1,56 @@
+{% load collector_tags %}
+<html>
+    <head>
+        <title>{% firstof REGION "Все результаты" %} - {{ CONTEST.name }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/css/semantic.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/css/results.css"/>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
+        <script src="/static/js/semantic.min.js"></script>
+        <script src="/static/js/semantic.js"></script>
+    </head>
+    <body id="resbody">
+        <div class="ui page segment">
+            <div class="masthead segment">
+              <div class="ui page grid">
+                <div class="column">
+                  <div class="introduction">
+                    <h1 class="ui header">{{ CONTEST.name }}</h1>
+                    <div class="ui huge breadcrumb">
+                      {% if REGION %}
+                      <a href="/" class="section"><i class="globe icon"></i>Все резултаты</a>
+                      {% else %}
+                      <div class="active section"><i class="globe icon"></i>Все резултаты</div>
+                      {% endif %}
+                      <div class="divider"> / </div>
+                      <a href="/regions" class="section"><i class="map icon"></i>Регионы</a>
+                      {% if REGION %}
+                      <div class="divider"> / </div>
+                      <div class="active section"><i class="table icon"></i>{{ REGION }}</div>
+                      {%endif %}
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui horizontal divider">
+                <i class="url icon"></i>
+            </div>
+            {% if REGION.res_links %}
+                <h2>Ссылки на результаты</h2>
+                <div class="ui list">
+                    {% for link in REGION.res_links|linebreaker %}
+                        <a href="{{ link }}">{{ link }}</a>
+                    {% endfor %}
+                </div>
+            {% elif REGION.exp_links %}
+                <h2>Ожидаемые ссылки на результаты</h2>
+                <div class="ui list">
+                    {% for link in REGION.exp_links|linebreaker %}
+                        <a href="{{ link }}">{{ link }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+         </div>
+    </div>
+    </body>
+</html>

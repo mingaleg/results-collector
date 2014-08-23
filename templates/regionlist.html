@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<h1>Список регионов</h1>
+<ul>
+    {% for reg in REGIONS %}
+    <li><a href="{{ reg.href|safe }}">{{ reg }}</a></li>
+    {% endfor %}
+</ul>
+</body>
+</html>

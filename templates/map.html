@@ -1,0 +1,204 @@
+<html style="height: 600px">
+    <head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="/static/js/jquery.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/css/semantic.min.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/results.css"/>
+<script src="/static/js/semantic.min.js"></script>
+    <body style="height: 600px">
+<div class="ui page segment">
+<div class="masthead segment">
+              <div class="ui page grid">
+                <div class="column">
+                  <div class="introduction">
+                    <h1 class="ui header">{{ CONTEST.name }}</h1>
+                    <div class="ui huge breadcrumb">
+                      <a href="/" class="section"><i class="globe icon"></i>Все резултаты</a>
+                      <div class="divider"> / </div>
+                      <div class="active section"><i class="map icon"></i>Регионы</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+
+    <div id="canvas" class ="ui raised segment" style="position: relative;">
+        <div id="regname" class="ui raised segment" style="position: absolute; top: 30px; left: 30px; display: none">test</div>
+        </div>
+     </div>
+<script>
+	var regions_name = {
+		'MariEl' : 'Республика Марий Эл',
+		'Karelia' : 'Республика Карелия',
+		'Adygeya' : 'Республика Адыгея',
+		'PermKrai' : 'Пермский край',
+		'MagadanOblast' : 'Магаданская область',
+		'LipetskOblast' : 'Липецкая область',
+		'Khakassia' : 'Республика Хакасия',
+		'KurganOblast' : 'Курганская область',
+		'Bashkortostan': 'Республика Башкортостан',
+		'MurmanskOblast' : 'Мурманская область',
+		'Yakutia' : 'Республика Саха',
+		'TverOblast' : 'Тверская область',
+		'Udmurtia' : 'Удмуртская Республика',
+		'SaintPetersburg' : 'Санкт-Петербург',
+		'LeningradOblast' : 'Ленинградская облась',
+		'SverdlovskOblast': 'Свердловская область',
+		'ChelyabinskOblast' : 'Челябинская область',
+		'VologdaOblast' : 'Вологодская область',
+		'TaymyrAutDistrict' : 'Красноярский край',
+		'IrkutskOblast' : 'Иркутская область',
+		'ArkhangelskOblast': 'Архангельская область',
+		'StavropolKrai' : 'Ставропольский край',
+		'KirovOblast' : 'Кировская область',
+		'KamchatkaKrai' : 'Камчатский край',
+		'Koryakia' : 'Камчатский край',
+		'NovosibirskOblast' : 'Новосибирская область',
+		'PskovOblast' : 'Псковская область',
+		'SmolenskOblast' : 'Смоленская область',
+		'NizhnyNovgorodOblast': 'Нижегородская область',
+		'PrimorskyKrai' : 'Приморский край',
+		'OmskOblast' : 'Омская область',
+		'KhantiaMansia' : 'Ханты-Мансийский автономный округ — Югра',
+		'VladimirOblast' : 'Владимирская область',
+		'Buryatia' : 'Республика Бурятия',
+		'YamaloNenetsAutDistrict' : 'Ямало-Ненецкий автономный округ',
+		'Kalmykia': 'Республика Калмыкия',
+		'TyumenOblast' : 'Тюменская область',
+		'JewishAutOblast' : 'Еврейская автономная область',
+		'AstrakhanOblast' : 'Астраханская область',
+		'SaratovOblast' : 'Саратовская область',
+		'TomskOblast' : 'Томская область',
+		'Mordovia' : 'Республика Мордовия',
+		'KurskOblast' : 'Курская область',
+		'BelgorodOblast' : 'Белгородская область',
+		'MoscowOblast' : 'Московская область',
+		'Moscow' : 'Москва',
+		'YaroslavlOblast' : 'Ярославская область',
+		'RostovOblast' : 'Ростовская область',
+		'SamaraOblast' : 'Самарская область',
+		'KostromaOblast' : 'Костромская область',
+		'Chuvashia' : 'Чувашская Республика',
+		'OrenburgOblast' : 'Оренбургская область',
+		'KrasnodarKrai' : 'Краснодарский край',
+		'KalugaOblast' : 'Калужская область',
+		'VolgogradOblast' : 'Волгоградская область',
+		'VoronezhOblast': 'Воронежская область',
+		'IvanovoOblast' : 'Ивановская область',
+		'TambovOblast': 'Тамбовская область',
+		'PenzaOblast' : 'Пензенская область',
+		'NovgorodOblast' : 'Новгородская область',
+		'NenetsAutDistrict' : 'Ненецкий автономный округ',
+		'KomiRep' : 'Республика Коми',
+		'BryanskOblast' : 'Брянская область',
+		'OryolOblast' : 'Орловская область',
+		'RyazanOblast' : 'Рязанская область',
+		'TulaOblast' : 'Тульская область',
+		'UlyanovskOblast' : 'Ульяновская область',
+		'Tatarstan' : 'Республика Татарстан',
+		'KemerovoOblast' : 'Кемеровская область',
+		'AltaiKrai' : 'Алтайский край',
+		'AltaiRepublic' : 'Республика Алтай',
+		'Tuva' : 'Республика Тыва',
+		'ChitaOblast' : 'Забайкальский край',
+		'AmurOblast' : 'Амурская область',
+		'KhabarovskKrai' : 'Хабаровский край',
+		'SakhalinOblast' : 'Сахалинская область',
+		'Chukotka' : 'Чукотский автономный округ',
+		'KarachayCherkessia' : 'Карачаево-Черкесская республика',
+		'KabardinoBalkaria' : 'Кабардино-Балкарская республика',
+		'NorthOssetia' : 'Республика Северная Осетия - Алания',
+		'Ingushetia' : 'Республика Ингушетия',
+		'Dagestan' : 'Республика Дагестан',
+		'Chechnya' : 'Чеченская республика',
+		'KaliningradOblast' : 'Калининградская область',
+	};
+
+	var true_regions = {
+    {% for reg in REGIONS %}
+        {% if reg.status == 1 %}
+        '{{ reg.slug }}': '{{ reg.href }}',
+        {% endif %}
+    {% endfor %}
+	};
+
+	var res_regions = {
+    {% for reg in REGIONS %}
+        {% if reg.status == 2 %}
+        '{{ reg.slug }}': '{{ reg.href }}',
+        {% endif %}
+    {% endfor %}
+	};
+
+	var exp_regions = {
+    {% for reg in REGIONS %}
+        {% if reg.status == 3 %}
+        '{{ reg.slug }}': '{{ reg.href }}',
+        {% endif %}
+    {% endfor %}
+	};
+
+
+	$(document).ready( function() {
+        var tmp = $('#regname').clone()
+	    $('#canvas').load('/static/map.svg', function () {
+            tmp.prependTo($('#canvas'))
+		$('#canvas').click(function() {
+			$('[good_region=1]').not(this).popover('hide');
+			$('[good_region=2]').not(this).popover('hide');
+		});
+
+        for (region in regions_name) {
+			$('#' + region)
+                    .attr('region', 'passive').attr('data_href', true_regions[region]).attr('title', regions_name[region])
+                    .mouseenter(function() {
+                        $('#regname').show().html($(this).attr('title'))
+                    }).mouseleave(function() {
+                        $('#regname').hide()
+                    })
+		}
+
+		for (region in true_regions) {
+			$('#' + region)
+                    .attr('fill', '#99CC99').attr('region', 'active').attr('data_href', true_regions[region])
+                    .click(function() {
+                        window.location.href = $(this).attr('data_href');
+                    })
+		}
+		for (region in res_regions) {
+			$('#' + region)
+                    .attr('fill', '#FFFF00').attr('region', 'res').attr('data_href', res_regions[region])
+                    .click(function() {
+                        window.location.href = $(this).attr('data_href');
+                    })
+		}
+		for (region in exp_regions) {
+			$('#' + region)
+                    .attr('fill', '#FF0000').attr('region', 'exp').attr('data_href', exp_regions[region])
+                    .click(function() {
+                        window.location.href = $(this).attr('data_href');
+                    })
+		}
+
+		$('[region=active]').hover(function(el) {
+		  	$(this).attr('fill', '#99EE99');
+		  }, function(el) {
+			$(this).attr('fill', '#99CC99');
+		  });
+		$('[region=res]').hover(function(el) {
+		  	$(this).attr('fill', '#FFFF88');
+		  }, function(el) {
+			$(this).attr('fill', '#FFFF00');
+		  });
+		$('[region=exp]').hover(function(el) {
+		  	$(this).attr('fill', '#FF8888');
+		  }, function(el) {
+			$(this).attr('fill', '#FF0000');
+		  });
+        });
+	});
+</script>
+</div>
+    </body>
+</html>

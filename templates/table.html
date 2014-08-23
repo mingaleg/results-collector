@@ -1,0 +1,71 @@
+{% load collector_tags %}
+            <table class="ui table segment celled compact" id="restable">
+                <thead>
+                    <tr>
+                        <th class="place">#</th>
+                        {% if NEEDS.PARTICIPANT %}
+                        <th class="participant">Участник</th>
+                        {% endif %}
+                        {% if NEEDS.REGION %}
+                        <th class="region">Регион</th>
+                        {% endif %}
+                        {% if NEEDS.GRADE %}
+                        <th class="grade">Класс</th>
+                        {% endif %}
+                        {% if NEEDS.DAY_1 %}
+                        {% for prob in CONTEST.probs_names|day:"1" %}
+                        <th class="prob">{{ prob }}</th>
+                        {%  endfor %}
+                        {% endif %}
+                        {% if NEEDS.DAY_1_SUM %}
+                        <th class="day">День&nbsp;1</th>
+                        {% endif %}
+                        {% if NEEDS.DAY_2 %}
+                        {% for prob in CONTEST.probs_names|day:"2" %}
+                        <th class="prob">{{ prob }}</th>
+                        {%  endfor %}
+                        {% endif %}
+                        {% if NEEDS.DAY_2_SUM %}
+                        <th class="day">День&nbsp;2</th>
+                        {% endif %}
+                        {% if NEEDS.SUM %}
+                        <th class="score">Сумма</th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for res in RESULTS %}
+                <tr>
+                    <td class="place">{{ res.place }}</td>
+                    {% if NEEDS.PARTICIPANT %}
+                    <td class="participant">{{ res.name | nobreak }}</td>
+                    {% endif %}
+                    {% if NEEDS.REGION %}
+                    <td class="region"><a href="{{ res.region.href }}">{{ res.region | nobreak }}</a></td>
+                    {% endif %}
+                    {% if NEEDS.GRADE %}
+                    <td class="grade">{{ res.grade }}</td>
+                    {% endif %}
+                    {% if NEEDS.DAY_1 %}
+                    {% for sc in res.probs_scores|day:"1" %}
+                    <td class="prob {{ sc|score_class }}">{{ sc }}</td>
+                    {% endfor %}
+                    {% endif %}
+                    {% if NEEDS.DAY_1_SUM %}
+                    <td class="day">{{ res|daysum:"1" }}</td>
+                    {% endif %}
+                    {% if NEEDS.DAY_2 %}
+                    {% for sc in res.probs_scores|day:"2" %}
+                    <td class="prob {{ sc|score_class }}">{{ sc }}</td>
+                    {% endfor %}
+                    {% endif %}
+                    {% if NEEDS.DAY_2_SUM %}
+                    <td class="day">{{ res|daysum:"2" }}</td>
+                    {% endif %}
+                    {% if NEEDS.SUM %}
+                    <td class="active score">{{ res.score }}</td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>

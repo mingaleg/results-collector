@@ -1,0 +1,83 @@
+{% load collector_tags %}
+
+<html>
+<body>
+<table>
+    <h1>{% firstof REGION "Все результаты" %}</h1>
+    <a href="/regions">Список регионов</a>
+    <thead>
+        <tr>
+            {% if NEEDS.PARTICIPANT %}
+            <td class="participant">Участник</td>
+            {% endif %}
+            {% if NEEDS.REGION %}
+            <td class="region">Регион</td>
+            {% endif %}
+            {% if NEEDS.GRADE %}
+            <td class="grade">Класс</td>
+            {% endif %}
+            {% if NEEDS.DAY_1 %}
+            {% for prob in CONTEST.probs_names|day:"1" %}
+            <td class="prob">{{ prob }}</td>
+            {%  endfor %}
+            {% endif %}
+            {% if NEEDS.DAY_1_SUM %}
+            <td class="day">День 1</td>
+            {% endif %}
+            {% if NEEDS.DAY_2 %}
+            {% for prob in CONTEST.probs_names|day:"2" %}
+            <td class="prob">{{ prob }}</td>
+            {%  endfor %}
+            {% endif %}
+            {% if NEEDS.DAY_2_SUM %}
+            <td class="day">День 2</td>
+            {% endif %}
+            {% if NEEDS.SUM %}
+            <td class="score">Сумма</td>
+            {% endif %}
+        </tr>
+    </thead>
+    {% for res in RESULTS %}
+    <tr>
+        {% if NEEDS.PARTICIPANT %}
+        <td class="participant">{{ res.name }}</td>
+        {% endif %}
+        {% if NEEDS.REGION %}
+        <td class="region"><a href="{{ res.region.href }}">{{ res.region }}</a></td>
+        {% endif %}
+        {% if NEEDS.GRADE %}
+        <td class="grade">{{ res.grade }}</td>
+        {% endif %}
+        {% if NEEDS.DAY_1 %}
+        {% for sc in res.probs_scores|day:"1" %}
+        <td class="prob">{{ sc|scoring|safe }}</td>
+        {% endfor %}
+        {% endif %}
+        {% if NEEDS.DAY_1_SUM %}
+        <td class="day">{{ res|daysum:"1" }}</td>
+        {% endif %}
+        {% if NEEDS.DAY_2 %}
+        {% for sc in res.probs_scores|day:"2" %}
+        <td class="prob">{{ sc|scoring|safe }}</td>
+        {% endfor %}
+        {% endif %}
+        {% if NEEDS.DAY_2_SUM %}
+        <td class="day">{{ res|daysum:"2" }}</td>
+        {% endif %}
+        {% if NEEDS.SUM %}
+        <td class="score">{{ res.score }}</td>
+        {% endif %}
+    </tr>
+    {% endfor %}
+</table>
+        {% if RESULTS.has_previous %}
+            <a href="?page={{ RESULTS.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="current">
+            Page {{ RESULTS.number }} of {{ RESULTS.paginator.num_pages }}.
+        </span>
+        {% if RESULTS.has_next %}
+            <a href="?page={{ RESULTS.next_page_number }}">next</a>
+        {% endif %}
+</body>
+</html>

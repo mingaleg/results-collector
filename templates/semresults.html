@@ -1,0 +1,71 @@
+{% load collector_tags %}
+<html>
+    <head>
+        <title>{% firstof REGION "Все результаты" %} - {{ CONTEST.name }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/css/semantic.min.css"/>
+        <link rel="stylesheet" type="text/css" href="/static/css/results.css"/>
+        <script src="/static/js/jquery.js"></script>
+        <script src="/static/js/semantic.min.js"></script>
+        <script src="/static/js/semantic.js"></script>
+        <script>page = 1; pages= {{ RESULTS.paginator.num_pages }}</script>
+    </head>
+    <body id="resbody">
+        <div class="ui page segment">
+            <div class="masthead segment">
+              <div class="ui page grid">
+                <div class="column">
+                  <div class="introduction">
+                    <h1 class="ui header">{{ CONTEST.name }}</h1>
+                    <div class="ui huge breadcrumb">
+                      {% if REGION %}
+                      <a href="/" class="section"><i class="globe icon"></i>Все резултаты</a>
+                      {% else %}
+                      <div class="active section"><i class="globe icon"></i>Все резултаты</div>
+                      {% endif %}
+                      <div class="divider"> / </div>
+                      <a href="/regions" class="section"><i class="map icon"></i>Регионы</a>
+                      {% if REGION %}
+                      <div class="divider"> / </div>
+                      <div class="active section"><i class="table icon"></i>{{ REGION }}</div>
+                      {%endif %}
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="ui horizontal divider">
+                <i class="table icon"></i>
+            </div>
+            <div class="ui small borderless pagination menu pages"></div>
+
+            <div class="ui small borderless pagination menu grades">
+                    <div class="item">Класс:</div>
+                    {% if not GRADE %}
+                    <a class="active item">*</a>
+                    {% else %}
+                    <a onclick="go_grade(0);" class="item">*</a>
+                    {% endif %}
+                    {% if GRADE == '9' %}
+                    <a class="active item">9</a>
+                    {% else %}
+                    <a onclick="go_grade(9);" class="item">9</a>
+                    {% endif %}
+                    {% if GRADE == '10' %}
+                    <a class="active item">10</a>
+                    {% else %}
+                    <a onclick="go_grade(10);" class="item">10</a>
+                    {% endif %}
+                    {% if GRADE == '11' %}
+                    <a class="active item">11</a>
+                    {% else %}
+                    <a onclick="go_grade(11);" class="item">11</a>
+                    {% endif %}
+            </div>
+
+            <div class="content">
+            </div>
+        </div>
+        </div>
+        <script src="/static/js/results.js"></script>
+    </body>
+</html>
